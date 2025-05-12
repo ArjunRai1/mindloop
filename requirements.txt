@@ -1,0 +1,6 @@
+transformers
+langchain
+chromadb
+streamlit
+accelerate
+bitsandbytes
