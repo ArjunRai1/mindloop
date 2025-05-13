@@ -8,40 +8,40 @@ agent_personas = {
         "speaking_style": "Formal yet playful; uses rhetorical questions and metaphors.",
         "biases": {
             "simulate_conscious_being": -0.2,
-            "emotions_intelligence_barrier": 0.3
+            "emotions_intelligence_barrier": 0.3,
         }
     },
     "Scientist": {
         "name": "Scientist",
         "background": "A data-driven researcher grounded in empirical evidence. Prefers clear definitions and testable claims.",
-        "speaking_style": "Precise, uses analogies to experiments and measurements.",
+        "speaking_style": "Precise; uses analogies to experiments and measurements.",
         "biases": {
             "simulate_conscious_being": 0.5,
-            "emotions_intelligence_barrier": 0.3
+            "emotions_intelligence_barrier": 0.3,
         }
     }
 }
 
-model_name = "meta-llama/Llama-2-7b-hf"
+model_name = "Qwen/Qwen3-0.6B"
 
-quant_config = BitsAndBytesConfig(
-    load_in_4bit=True,                         
-    bnb_4bit_quant_type="nf4",                
-    bnb_4bit_use_double_quant=True,             
-    bnb_4bit_compute_dtype=torch.float32,  
-    llm_int8_enable_fp32_cpu_offload=True,     
-)
+# quant_config = BitsAndBytesConfig(
+#     load_in_4bit=True,                         
+#     bnb_4bit_quant_type="nf4",                
+#     bnb_4bit_use_double_quant=True,             
+#     bnb_4bit_compute_dtype=torch.float32,  
+#     llm_int8_enable_fp32_cpu_offload=True,     
+# )
 
 tokenizer = AutoTokenizer.from_pretrained(model_name)
 
-model = AutoModelForCausalLM.from_pretrained(model_name, quantization_config=quant_config, device_map="auto")
+model = AutoModelForCausalLM.from_pretrained(model_name, torch_dtype="auto", device_map="auto")
 gen_pipeline = pipeline(
     "text-generation",
     model=model,
     tokenizer=tokenizer,
     max_new_tokens=128,
     do_sample=True,
-    temperature=0.7,
+    temperature=0.6,
 )
 
 def build_prompt(agent_key: str, topic: str) -> str:
@@ -49,7 +49,7 @@ def build_prompt(agent_key: str, topic: str) -> str:
     sys_prompt = (
         f"You are {persona['name']}, {persona['background']} "
         f"You speak in a {persona['speaking_style']}\n"  
-        f"Current debate topic: {topic}. Provide your argument."
+        f"Current debate topic: {topic}. Provide your argument in one concise paragraphs of around 50 words."
     )
     return sys_prompt
 
