@@ -4,8 +4,8 @@ import torch
 agent_personas = {
     "Philosopher": {
         "name": "Philosopher",
-        "background": "A wandering scholar fascinated by abstract ideas. Has studied ancient texts and modern philosophy alike.",
-        "speaking_style": "Formal yet playful; uses rhetorical questions and metaphors.",
+        "background": "A scholar fascinated by abstract ideas. Has studied ancient texts and modern philosophy alike. ",
+        "speaking_style": "Formal yet playful; uses rhetorical questions and metaphors but can express views simply.",
         "biases": {
             "simulate_conscious_being": -0.2,
             "emotions_intelligence_barrier": 0.3,
@@ -22,7 +22,7 @@ agent_personas = {
     }
 }
 
-model_name = "Qwen/Qwen3-0.6B"
+model_name = "google/gemma-3-1b-it"
 
 # quant_config = BitsAndBytesConfig(
 #     load_in_4bit=True,                         
