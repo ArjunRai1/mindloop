@@ -3,4 +3,5 @@ langchain
 chromadb
 streamlit
 accelerate
-bitsandbytes
+faiss-cpu
+sentence-transformers
